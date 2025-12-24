@@ -97,7 +97,7 @@ class DigitDrawer:
         
         # save(digit_image_array)
         
-        UART(self.digit)
+        # UART(self.digit)
     
     def train(self):
         img=self.image.resize((MNIST_SIZE, MNIST_SIZE),Image.Resampling.LANCZOS)
