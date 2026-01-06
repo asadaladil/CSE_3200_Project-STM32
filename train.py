@@ -1,7 +1,7 @@
 import tkinter as tk
 from tkinter import messagebox
 
-def train(parent):
+def Train(parent):
     result = {"value": None}
 
     input_window = tk.Toplevel(parent)

@@ -3,9 +3,9 @@ from PIL import Image,ImageDraw,ImageOps
 import numpy as np
 from Prediction import predict_custom_matrix
 from UART import UART
-from train import train
+from train import Train
 from Digit_Processing import train_model
-
+from check import get_value,save_value
 
 CANVAS_SIZE=600       # Size of the window
 MNIST_SIZE=28         # Target size (28x28)
@@ -97,16 +97,17 @@ class DigitDrawer:
         
         # save(digit_image_array)
         
-        # UART(self.digit)
+        UART(self.digit)
     
     def train(self):
         img=self.image.resize((MNIST_SIZE, MNIST_SIZE),Image.Resampling.LANCZOS)
         digit_image_array = ImageOps.invert(img)
         digit_image_array=np.array(digit_image_array)
-        y=train(self.window)
-        to_train_x.append(digit_image_array)
-        to_train_y.append(y)
-        save(digit_image_array,y)
+        y=Train(self.window)
+        if y!=None:
+            to_train_x.append(digit_image_array)
+            to_train_y.append(y)
+            save(digit_image_array,y)
         
             
 
@@ -114,23 +115,24 @@ class DigitDrawer:
 interface=tk.Tk()
 DigitDrawer(interface)
 interface.mainloop()
-if to_train_x and len(to_train_x)==len(to_train_y):
-    with open("image_array.txt",mode="r") as file:
-        a=[]
-        file=file.readlines()
-        for i in file:
-            if len(i.split(' '))==1: #for taking y values
-                to_train_y.append(int(i))
-                to_train_x.append(a)
-                a=[]
-                continue
-            temp=[]
-            for j in i.split(' '):
-                try:
-                    temp.append(int(j))
-                except:
-                    continue
-            a.append(temp)
+
+# if to_train_x and len(to_train_x)==len(to_train_y):
+#     with open("image_array.txt",mode="r") as file:
+#         a=[]
+#         file=file.readlines()
+#         for i in file:
+#             if len(i.split(' '))==1: #for taking y values
+#                 to_train_y.append(int(i))
+#                 to_train_x.append(a)
+#                 a=[]
+#                 continue
+#             temp=[]
+#             for j in i.split(' '):
+#                 try:
+#                     temp.append(int(j))
+#                 except:
+#                     continue
+#             a.append(temp)
             
     
-    train_model(to_train_x,to_train_y)
+#     train_model(to_train_x,to_train_y)
