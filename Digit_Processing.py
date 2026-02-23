@@ -2,22 +2,50 @@ import tensorflow as tf
 from keras import layers, models
 import numpy as np
 
-def train_model(x,y):
+layers=tf.keras.layers
+models=tf.keras.models
+ImageDataGenerator=tf.keras.preprocessing.image.ImageDataGenerator
+
+def train_model():
+    #1. Dataset Loading:
+    (X, Y),(x, y)=tf.keras.datasets.mnist.load_data() # 60000 train image, 10000 test image
     
-    (x_train, y_train), (x_test, y_test) = tf.keras.datasets.mnist.load_data() # 60000 train image, 10000 test image
+    x_train=list(X)+list(x)
+    y_train=list(Y)+list(y)
     
-    x_train=list(x_train)+list(x_test)+x
-    y_train=list(y_train)+list(y_test)+y
+    for digit in range(10):
+        with open(f"./Digit_Image_Array/Digit{digit}.txt",mode="r") as file:
+            a=[]
+            file=file.readlines()
+            for i in file:
+                if len(i.split(' '))==1: #for taking y values
+                    x_train.append(a)
+                    y_train.append(int(i))
+                    a=[]
+                    continue
+                temp=[]
+                for j in i.split(' '):
+                    try:
+                        temp.append(int(j))
+                    except:
+                        continue
+                a.append(temp)
     
     x_train=np.array(x_train)
     y_train=np.array(y_train)
     
     # 2. Preprocessing
     x_train=x_train.astype('float32') / 255.0 # normalizing
-
+    
+    # Shuffle the dataset
+    indices=np.arange(len(x_train))
+    np.random.shuffle(indices)
+    x_train=x_train[indices]
+    y_train=y_train[indices]
+    
+    
     # Reshape images to (28, 28, 1) as CNN expect 3D data
-    x_train=np.expand_dims(x_train,3)
-    # x_test=np.expand_dims(x_test, -1)
+    x_train=np.expand_dims(x_train,-1)
 
     print(f"Training data shape: {x_train.shape}")
 
@@ -47,14 +75,30 @@ def train_model(x,y):
                   metrics=['accuracy'])
 
     model.summary()
-
+    
+    # 4. Augmentation
+    datagen=ImageDataGenerator(
+        rotation_range=15,
+        width_shift_range=0.15,
+        height_shift_range=0.15,
+        zoom_range=0.15,
+        validation_split=0.2
+    )
+    datagen.fit(x_train)
+    
+    # 5. CNN Model Fit
     print("\nStarting training... (This might take a minute)")
-    model.fit(x_train, y_train, epochs=5, batch_size=64, validation_split=0.1)
+    model.fit(
+            datagen.flow(x_train, y_train, batch_size=64),
+            epochs=15,
+        )
 
     # 6. Save the Model
-    model_filename = "mnist_digit_model.h5"
+    model_filename="Trained_digit_model.h5"
     model.save(model_filename)
     print(f"\n✅ Model saved successfully as '{model_filename}'")
     print(f"now run your interface script!")
 
-# train_model([],[])
+train_model()
+
+

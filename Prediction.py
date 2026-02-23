@@ -1,7 +1,7 @@
 import tensorflow as tf
 import numpy as np
 
-MODEL_PATH='mnist_digit_model.h5'
+MODEL_PATH="Trained_digit_model.h5"
 try:
     model=tf.keras.models.load_model(MODEL_PATH)
     print("Model loaded successfully.")
@@ -21,7 +21,9 @@ def predict_custom_matrix(image_matrix):
     if input_data.shape != (28, 28): #28/28 check
         print(f"Error: Matrix must be 28x28! Received:{input_data.shape}")
         return
-
+    if np.max(input_data)==0:
+        print("No digit Exists")
+        return
     if np.max(input_data)>1.0:
         input_data=input_data.astype('float32')/255.0
     else:

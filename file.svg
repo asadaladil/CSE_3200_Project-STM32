@@ -1,0 +1,68 @@
+<svg width="900" height="300" xmlns="http://www.w3.org/2000/svg">
+  <!-- Definitions for arrow markers -->
+  <defs>
+    <marker id="arrowhead" markerWidth="10" markerHeight="7" 
+    refX="0" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#333" />
+    </marker>
+  </defs>
+
+  <!-- Background -->
+  <rect width="100%" height="100%" fill="white" />
+
+  <!-- STYLES -->
+  <style>
+    .box { fill: #f0f8ff; stroke: #000; stroke-width: 2px; }
+    .text-title { font-family: Arial, sans-serif; font-size: 14px; font-weight: bold; text-anchor: middle; }
+    .text-sub { font-family: Arial, sans-serif; font-size: 11px; fill: #555; text-anchor: middle; }
+    .arrow { stroke: #333; stroke-width: 2px; marker-end: url(#arrowhead); }
+    .label { font-family: Courier New, monospace; font-size: 10px; fill: #d00; text-anchor: middle; background-color: white; }
+  </style>
+
+  <!-- BLOCK 1: INPUT -->
+  <rect x="20" y="100" width="140" height="80" rx="10" class="box" />
+  <text x="90" y="135" class="text-title">User Input</text>
+  <text x="90" y="155" class="text-sub">(Python GUI / Mouse)</text>
+
+  <!-- ARROW 1 -->
+  <line x1="160" y1="140" x2="208" y2="140" class="arrow" />
+  <text x="185" y="130" class="label">Raw Pixel</text>
+
+  <!-- BLOCK 2: PROCESSING -->
+  <rect x="220" y="100" width="140" height="80" rx="10" class="box" />
+  <text x="290" y="135" class="text-title">AI Processing</text>
+  <text x="290" y="155" class="text-sub">(TensorFlow CNN)</text>
+
+  <!-- ARROW 2 -->
+  <line x1="360" y1="140" x2="408" y2="140" class="arrow" />
+  <text x="385" y="130" class="label">Prediction</text>
+
+  <!-- BLOCK 3: COMM -->
+  <rect x="420" y="100" width="140" height="80" rx="10" class="box" />
+  <text x="490" y="135" class="text-title">Serial Bridge</text>
+  <text x="490" y="155" class="text-sub">(USB / FTD232RL)</text>
+
+  <!-- ARROW 3 -->
+  <line x1="560" y1="140" x2="608" y2="140" class="arrow" />
+  <text x="585" y="130" class="label">UART (RX)</text>
+
+  <!-- BLOCK 4: CONTROL -->
+  <rect x="620" y="100" width="140" height="80" rx="10" class="box" />
+  <text x="690" y="135" class="text-title">Microcontroller</text>
+  <text x="690" y="155" class="text-sub">(STM32F103)</text>
+
+  <!-- ARROW 4 -->
+  <line x1="760" y1="140" x2="808" y2="140" class="arrow" />
+  <text x="785" y="130" class="label">GPIO</text>
+
+  <!-- BLOCK 5: OUTPUT -->
+  <rect x="820" y="110" width="60" height="60" rx="5" fill="#ffe4e1" stroke="#000" stroke-width="2px" />
+  <text x="850" y="135" class="text-title" style="font-size: 24px; fill: red;">8</text>
+  <text x="850" y="160" class="text-sub" style="font-size: 9px;">Display</text>
+
+  <!-- SYSTEM BOUNDARY LINES (Optional context) -->
+  <line x1="410" y1="50" x2="410" y2="230" stroke="#999" stroke-width="1" stroke-dasharray="5,5" />
+  <text x="350" y="240" fill="#999" font-size="12" font-style="italic">PC (Software)</text>
+  <text x="480" y="240" fill="#999" font-size="12" font-style="italic">Embedded (Hardware)</text>
+
+</svg>
