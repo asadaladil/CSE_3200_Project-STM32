@@ -4,6 +4,7 @@ import numpy as np
 from Prediction import predict_custom_matrix
 from UART import UART
 from train import Train
+import time
 
 CANVAS_SIZE=600       # Size of the window
 MNIST_SIZE=28         # Target size (28x28)
@@ -81,6 +82,7 @@ class DigitDrawer:
         self.draw=ImageDraw.Draw(self.image)
 
     def send_photo(self):
+        x=time.time()*1000
         # 1. Resize to 28x28 (Standard MNIST size)
         temp=self.image.resize((MNIST_SIZE, MNIST_SIZE),Image.Resampling.LANCZOS)
         
@@ -92,8 +94,10 @@ class DigitDrawer:
         self.digit=predict_custom_matrix(digit_image_array)
         
         # save(digit_image_array)
-        
-        # UART(self.digit)
+        z=time.time()*1000
+        UART(self.digit)
+        y=time.time()*1000
+        print(f"{np.round((y-x),2)} {np.round(y-z,2)}")
     
     def train(self):
         img=self.image.resize((MNIST_SIZE, MNIST_SIZE),Image.Resampling.LANCZOS)
